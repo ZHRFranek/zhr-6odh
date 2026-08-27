@@ -22,7 +22,7 @@ collections:
     summary: "{{title}}"
     fields:
       - { label: Podpis, name: title, widget: string }
-      - { label: Zdjęcie, name: image, widget: image, choose_url: false }
+      - { label: Zdjęcie, name: image, widget: image, choose_url: true, required: false }
       - label: Zastęp
         name: zastep
         widget: select
@@ -70,18 +70,18 @@ collections:
               - { label: Patron, name: patron, widget: string }
               - { label: Nagłówek, name: title, widget: string }
               - { label: Motto, name: motto, widget: string }
-              - { label: Zdjęcie tła, name: backgroundImage, widget: image }
+              - { label: Zdjęcie tła, name: backgroundImage, widget: string, required: false, hint: "Adres URL lub /uploads/nazwa.jpg" }
           - label: O drużynie
             name: about
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
               - { label: Tytuł, name: title, widget: string }
               - { label: Wstęp, name: lead, widget: text }
               - { label: Akapit 1, name: paragraph1, widget: text }
               - { label: Akapit 2, name: paragraph2, widget: text }
               - { label: Tradycje, name: traditions, widget: text }
-              - { label: Zdjęcie, name: image, widget: image }
+              - { label: Zdjęcie, name: image, widget: string, required: false, hint: "Adres URL lub /uploads/nazwa.jpg" }
               - { label: Barwy, name: barwy, widget: string }
               - { label: Opis barw, name: barwyOpis, widget: string }
               - { label: Okrzyk, name: okrzyk, widget: string }
@@ -93,7 +93,7 @@ collections:
             name: zastepy
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
               - { label: Tytuł, name: title, widget: string }
               - { label: Wstęp, name: lead, widget: text }
               - label: Lista zastępów
@@ -109,8 +109,8 @@ collections:
             name: kadra
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
-              - { label: Tytuł, name: title, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
+              - { label: Tytuł, name: title, widget: string, required: false }
               - { label: Wstęp, name: lead, widget: text }
               - label: Osoby
                 name: items
@@ -126,13 +126,13 @@ collections:
             name: dolacz
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
               - { label: Tytuł, name: title, widget: string }
           - label: Galeria (teksty)
             name: galeria
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
               - { label: Tytuł, name: title, widget: string }
               - { label: Opis — linia 1, name: introLine1, widget: text }
               - { label: Opis — linia 2, name: introLine2, widget: text }
@@ -140,7 +140,7 @@ collections:
             name: kalendarz
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
               - { label: Tytuł, name: title, widget: string }
               - { label: Wstęp, name: lead, widget: text }
               - label: Wydarzenia
@@ -156,7 +156,7 @@ collections:
             name: kontakt
             widget: object
             fields:
-              - { label: Etykieta, name: tag, widget: string }
+              - { label: Etykieta, name: tag, widget: string, required: false }
               - { label: Tytuł, name: title, widget: string }
               - { label: Wstęp, name: lead, widget: text }
               - { label: E-mail, name: email, widget: string }
