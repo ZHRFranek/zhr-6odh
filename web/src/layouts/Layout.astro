@@ -73,15 +73,27 @@ const pageDescription = description ?? site.meta.description;
     </script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script is:inline>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', (user) => {
-          if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/';
-            });
+      (function () {
+        var hash = window.location.hash || '';
+        function setupIdentity() {
+          if (!window.netlifyIdentity) return;
+          window.netlifyIdentity.on('init', function (user) {
+            if (!user) {
+              window.netlifyIdentity.on('login', function () {
+                document.location.href = '/admin/';
+              });
+            }
+          });
+          if (hash.indexOf('recovery_token') !== -1) {
+            window.netlifyIdentity.open('recovery');
+          } else if (hash.indexOf('invite_token') !== -1) {
+            window.netlifyIdentity.open('signup');
+          } else if (hash.indexOf('confirmation_token') !== -1) {
+            window.netlifyIdentity.open('login');
           }
-        });
-      }
+        }
+        setupIdentity();
+      })();
     </script>
   </body>
 </html>
