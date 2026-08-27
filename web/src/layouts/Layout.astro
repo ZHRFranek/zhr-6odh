@@ -75,6 +75,14 @@ const pageDescription = description ?? site.meta.description;
     <script is:inline>
       (function () {
         var hash = window.location.hash || '';
+        if (
+          hash.indexOf('recovery_token') !== -1 ||
+          hash.indexOf('invite_token') !== -1 ||
+          hash.indexOf('confirmation_token') !== -1
+        ) {
+          window.location.replace('/auth/' + hash);
+          return;
+        }
         function setupIdentity() {
           if (!window.netlifyIdentity) return;
           window.netlifyIdentity.on('init', function (user) {
@@ -84,13 +92,6 @@ const pageDescription = description ?? site.meta.description;
               });
             }
           });
-          if (hash.indexOf('recovery_token') !== -1) {
-            window.netlifyIdentity.open('recovery');
-          } else if (hash.indexOf('invite_token') !== -1) {
-            window.netlifyIdentity.open('signup');
-          } else if (hash.indexOf('confirmation_token') !== -1) {
-            window.netlifyIdentity.open('login');
-          }
         }
         setupIdentity();
       })();

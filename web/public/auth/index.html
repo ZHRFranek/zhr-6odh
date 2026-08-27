@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Logowanie — panel redakcyjny</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f5f0e8;
+      color: #1f3d2b;
+    }
+    .card {
+      max-width: 28rem;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(31, 61, 43, 0.12);
+      text-align: center;
+    }
+    a { color: #1f3d2b; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Panel redakcyjny</h1>
+    <p id="status">Ładowanie…</p>
+    <p><a href="/admin/">Przejdź do panelu /admin/</a></p>
+  </div>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    (function () {
+      var status = document.getElementById('status');
+      var hash = window.location.hash || '';
+
+      function openModal() {
+        if (!window.netlifyIdentity) {
+          status.textContent = 'Nie udało się załadować logowania. Wyłącz adblock i odśwież stronę.';
+          return;
+        }
+        window.netlifyIdentity.on('login', function () {
+          window.location.href = '/admin/';
+        });
+        window.netlifyIdentity.on('close', function () {
+          status.textContent = 'Okno zamknięte. Kliknij poniżej, aby otworzyć panel ponownie.';
+        });
+        if (hash.indexOf('recovery_token') !== -1) {
+          status.textContent = 'Ustaw nowe hasło w oknie poniżej.';
+          window.netlifyIdentity.open('recovery');
+        } else if (hash.indexOf('invite_token') !== -1) {
+          status.textContent = 'Dokończ rejestrację — ustaw hasło w oknie poniżej.';
+          window.netlifyIdentity.open('signup');
+        } else if (hash.indexOf('confirmation_token') !== -1) {
+          status.textContent = 'Potwierdź konto w oknie poniżej.';
+          window.netlifyIdentity.open('login');
+        } else {
+          status.textContent = 'Zaloguj się, aby wejść do panelu.';
+          window.netlifyIdentity.open('login');
+        }
+      }
+
+      if (window.netlifyIdentity) {
+        openModal();
+      } else {
+        window.addEventListener('load', openModal);
+      }
+    })();
+  </script>
+</body>
+</html>
