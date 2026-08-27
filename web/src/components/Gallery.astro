@@ -1,0 +1,180 @@
+---
+import type { GalleryItem } from '../lib/content';
+
+interface Zastep {
+  id: string;
+  name: string;
+}
+
+interface Props {
+  tag: string;
+  title: string;
+  introLine1: string;
+  introLine2: string;
+  zastepy: Zastep[];
+  items: GalleryItem[];
+}
+
+const { tag, title, introLine1, introLine2, zastepy, items } = Astro.props;
+
+function thumbSrc(src: string) {
+  if (src.includes('unsplash.com')) {
+    return src.replace(/w=\d+/g, 'w=400').replace(/q=\d+/g, 'q=70');
+  }
+  return src;
+}
+---
+
+<section class="section section--beige" id="galeria">
+  <div class="container">
+    <h2 class="section-heading">{tag}</h2>
+    <div class="gallery-intro">
+      <p class="section__lead">{introLine1}</p>
+      <p class="section__lead">{introLine2}</p>
+    </div>
+
+    <div class="gallery-filters">
+      <div class="gallery-filters__group">
+        <span class="gallery-filters__label">Zastęp</span>
+        <div class="gallery-tags" role="tablist" aria-label="Filtruj według zastępu">
+          {zastepy.map((z) => (
+            <button type="button" class="gallery-tag" data-filter="zastep" data-value={z.id}>
+              {z.name}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div class="gallery-filters__group">
+        <span class="gallery-filters__label">Typ aktywności</span>
+        <div class="gallery-tags gallery-tags--type">
+          <button type="button" class="gallery-tag" data-filter="type" data-value="oboz">Obóz</button>
+          <button type="button" class="gallery-tag" data-filter="type" data-value="biwak">Biwak</button>
+          <button type="button" class="gallery-tag" data-filter="type" data-value="akcja">Akcja</button>
+          <button type="button" class="gallery-tag" data-filter="type" data-value="zbiorka">Zbiórka</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="gallery-empty" id="galleryEmpty" role="status">Brak zdjęć dla wybranych tagów.</p>
+
+    <div class="gallery-grid" id="galleryGrid">
+      {items.map((item) => {
+        const tags = `${item.activityType},${item.year},publiczne`;
+        return (
+          <div
+            class="gallery-item"
+            data-zastep={item.zastep ?? ''}
+            data-tags={tags}
+            data-full={item.image}
+          >
+            <img src={thumbSrc(item.image)} alt={item.title} loading="lazy" />
+            <span class="gallery-item__label">{item.title}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Zamknij">&times;</button>
+  <img src="" alt="" id="lightboxImg" />
+</div>
+
+<script>
+  const galleryTagBtns = document.querySelectorAll('.gallery-tag');
+  const galleryZastepBtns = document.querySelectorAll('.gallery-tag[data-filter="zastep"]');
+  const gallerySecondaryBtns = document.querySelectorAll('.gallery-tag[data-filter="type"]');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const galleryEmpty = document.getElementById('galleryEmpty');
+  let activeZastep: string | null = null;
+  let activeSecondary: string | null = null;
+
+  function resetGalleryFilters() {
+    activeZastep = null;
+    activeSecondary = null;
+    galleryTagBtns.forEach((b) => b.classList.remove('active'));
+    applyGalleryFilters();
+  }
+
+  function applyGalleryFilters() {
+    let visibleCount = 0;
+
+    galleryItems.forEach((item) => {
+      const el = item as HTMLElement;
+      const tags = (el.dataset.tags || '').split(',');
+      let show = true;
+
+      if (activeZastep) {
+        const zastep = el.dataset.zastep || '';
+        show = zastep === activeZastep;
+      }
+      if (show && activeSecondary) show = tags.includes(activeSecondary);
+
+      el.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+
+    galleryEmpty?.classList.toggle('visible', visibleCount === 0);
+  }
+
+  galleryZastepBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const value = (btn as HTMLElement).dataset.value!;
+      if (activeZastep === value) return;
+
+      galleryZastepBtns.forEach((b) => b.classList.remove('active'));
+      activeZastep = value;
+      btn.classList.add('active');
+      applyGalleryFilters();
+    });
+  });
+
+  gallerySecondaryBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const isActive = btn.classList.contains('active');
+      gallerySecondaryBtns.forEach((b) => b.classList.remove('active'));
+
+      if (isActive) {
+        activeSecondary = null;
+      } else {
+        activeSecondary = (btn as HTMLElement).dataset.value!;
+        btn.classList.add('active');
+      }
+
+      applyGalleryFilters();
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#galeria') resetGalleryFilters();
+  });
+
+  window.addEventListener('gallery:reset', resetGalleryFilters);
+
+  if (location.hash === '#galeria') resetGalleryFilters();
+  else applyGalleryFilters();
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg') as HTMLImageElement | null;
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  galleryItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      const el = item as HTMLElement;
+      const img = item.querySelector('img');
+      if (!lightboxImg || !img) return;
+      lightboxImg.src = el.dataset.full || '';
+      lightboxImg.alt = img.alt;
+      lightbox?.classList.add('open');
+    });
+  });
+
+  lightboxClose?.addEventListener('click', () => lightbox?.classList.remove('open'));
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lightbox?.classList.remove('open');
+  });
+</script>

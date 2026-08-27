@@ -1,0 +1,19 @@
+Zmienić sposób rekrutacji.
+Zmienić nazwę z rekrutacja na nabory.
+Rekrutacja nie powinna odbywać się przez internet.
+Na stronie powinna być zgoda.
+Zastanowić się nad sensem map.
+Usunąć nazwę "odpowiedzialni".
+Zamiast dołącz do drużyny dać jak dołączyć do drużyny.
+Zrobić wersję mobilną
+Zrobić kod QR na ulotki 
+Ustalić kolory strony.
+Usunąć z części kontakt "Lokalizacja zbiórek" i umieścić ją w informacjach o zastępach. 
+"Lokalizacja zbiórek" będzie przy poszczególnych zastępach.
+Zmienić nazwę strony na 6 ODH
+
+Nowa wersja rekrutacji:
+-Zmiana nazwy na nabory,
+-Dodać informacje o zastępach (Nazwa, miejsca zbiórek, szkoły w których będą zastępowi, informacja o zbiórce ponaborowej, dane do kontaktu z zastępowym),
+-zgoda ZHR,
+-informacja o składkach, 

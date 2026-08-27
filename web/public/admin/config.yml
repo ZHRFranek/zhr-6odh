@@ -1,0 +1,171 @@
+# Po wdrożeniu na Netlify: Git Gateway sam łączy się z repo podpiętym pod stronę Netlify.
+# local_backend działa tylko na localhost (npm run cms); na produkcji używany jest git-gateway.
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+media_folder: public/uploads
+public_folder: /uploads
+
+locale: pl
+
+collections:
+  - name: gallery
+    label: Galeria
+    label_singular: Zdjęcie
+    folder: src/content/gallery
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    summary: "{{title}}"
+    fields:
+      - { label: Podpis, name: title, widget: string }
+      - { label: Zdjęcie, name: image, widget: image, choose_url: false }
+      - label: Zastęp
+        name: zastep
+        widget: select
+        required: false
+        default: ""
+        hint: "Opcjonalnie — zostaw puste, jeśli zdjęcie dotyczy całej drużyny."
+        options:
+          - { label: "— bez zastępu —", value: "" }
+          - { label: "Zastęp 1", value: "1" }
+          - { label: "Zastęp 2", value: "2" }
+          - { label: "Zastęp 3", value: "3" }
+          - { label: "Zastęp 4", value: "4" }
+      - label: Typ aktywności
+        name: activityType
+        widget: select
+        options:
+          - { label: Obóz, value: oboz }
+          - { label: Biwak, value: biwak }
+          - { label: Akcja, value: akcja }
+          - { label: Zbiórka, value: zbiorka }
+      - { label: Rok, name: year, widget: string, default: "2026", required: false }
+
+  - name: site
+    label: Treści strony
+    files:
+      - name: settings
+        label: Ustawienia i teksty
+        file: src/data/site.json
+        fields:
+          - label: SEO
+            name: meta
+            widget: object
+            fields:
+              - { label: Tytuł strony, name: title, widget: string }
+              - { label: Opis (meta), name: description, widget: text }
+          - label: Marka
+            name: brand
+            widget: object
+            fields:
+              - { label: Nazwa w menu, name: name, widget: string }
+          - label: Strona główna (Hero)
+            name: hero
+            widget: object
+            fields:
+              - { label: Patron, name: patron, widget: string }
+              - { label: Nagłówek, name: title, widget: string }
+              - { label: Motto, name: motto, widget: string }
+              - { label: Zdjęcie tła, name: backgroundImage, widget: image }
+          - label: O drużynie
+            name: about
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+              - { label: Wstęp, name: lead, widget: text }
+              - { label: Akapit 1, name: paragraph1, widget: text }
+              - { label: Akapit 2, name: paragraph2, widget: text }
+              - { label: Tradycje, name: traditions, widget: text }
+              - { label: Zdjęcie, name: image, widget: image }
+              - { label: Barwy, name: barwy, widget: string }
+              - { label: Opis barw, name: barwyOpis, widget: string }
+              - { label: Okrzyk, name: okrzyk, widget: string }
+              - { label: Symbolika, name: symbolika, widget: text }
+              - { label: Miasto, name: miasto, widget: string }
+              - { label: Hufiec, name: hufiec, widget: string }
+              - { label: Chorągiew, name: choragiew, widget: string }
+          - label: Zastępy (nagłówek sekcji)
+            name: zastepy
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+              - { label: Wstęp, name: lead, widget: text }
+              - label: Lista zastępów
+                name: items
+                widget: list
+                fields:
+                  - { label: ID (1–4), name: id, widget: string }
+                  - { label: Nazwa, name: name, widget: string }
+                  - { label: Emoji / ikona, name: emoji, widget: string }
+                  - { label: Skład, name: sklad, widget: string }
+                  - { label: Opis, name: opis, widget: text }
+          - label: Kadra
+            name: kadra
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+              - { label: Wstęp, name: lead, widget: text }
+              - label: Osoby
+                name: items
+                widget: list
+                fields:
+                  - { label: Inicjały, name: initials, widget: string }
+                  - { label: Stopień i funkcja, name: stopien, widget: string }
+                  - { label: Imię i nazwisko, name: name, widget: string }
+                  - { label: Opis, name: opis, widget: text }
+                  - { label: Kontakt (opcjonalnie), name: kontakt, widget: string, required: false }
+                  - { label: Wyróżniona karta (drużynowy), name: lead, widget: boolean, default: false }
+          - label: Jak dołączyć
+            name: dolacz
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+          - label: Galeria (teksty)
+            name: galeria
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+              - { label: Opis — linia 1, name: introLine1, widget: text }
+              - { label: Opis — linia 2, name: introLine2, widget: text }
+          - label: Kalendarz
+            name: kalendarz
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+              - { label: Wstęp, name: lead, widget: text }
+              - label: Wydarzenia
+                name: events
+                widget: list
+                fields:
+                  - { label: Dzień, name: day, widget: string }
+                  - { label: Miesiąc, name: month, widget: string }
+                  - { label: Typ, name: type, widget: string }
+                  - { label: Tytuł, name: title, widget: string }
+                  - { label: Miejsce / godzina, name: place, widget: string }
+          - label: Kontakt
+            name: kontakt
+            widget: object
+            fields:
+              - { label: Etykieta, name: tag, widget: string }
+              - { label: Tytuł, name: title, widget: string }
+              - { label: Wstęp, name: lead, widget: text }
+              - { label: E-mail, name: email, widget: string }
+              - { label: Telefon, name: phone, widget: string }
+              - { label: Facebook (URL), name: facebook, widget: string }
+              - { label: Instagram (URL), name: instagram, widget: string }
+          - label: Stopka
+            name: footer
+            widget: object
+            fields:
+              - { label: Copyright, name: copyright, widget: string }
+              - { label: Notatka, name: note, widget: string, required: false }

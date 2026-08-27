@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drużyna [Nazwa] — ZHR</title>
+  <meta name="description" content="Strona drużyny harcerskiej ZHR — dołącz, poznaj zastępy, kalendarz i kontakt." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-dark: #1F3D2B;
+      --green-mid: #4A6B4F;
+      --beige: #D9CBB3;
+      --beige-light: #F5F0E8;
+      --white: #FFFFFF;
+      --black: #111111;
+      --text: #2A2A2A;
+      --text-muted: #5C5C5C;
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(31, 61, 43, 0.12);
+      --max: 1140px;
+      --nav-h: 72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--beige-light);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Montserrat", "Segoe UI", sans-serif;
+      line-height: 1.2;
+      color: var(--green-dark);
+    }
+    h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; margin: 0 0 0.5rem; }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; margin: 0 0 0.75rem; }
+    h3 { font-size: 1.15rem; font-weight: 600; margin: 0 0 0.5rem; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--green-mid); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(var(--max), calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(31, 61, 43, 0.08);
+    }
+    .nav__inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--green-dark);
+      text-decoration: none;
+    }
+    .nav__brand:hover { text-decoration: none; }
+    .nav__logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--green-dark);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav__links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.5rem 0.85rem;
+      border-radius: 999px;
+      transition: color 0.2s, background 0.2s, font-weight 0.2s;
+    }
+    .nav__links a:hover {
+      color: var(--green-dark);
+      background: var(--beige);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .nav__toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+    .nav__toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--green-dark);
+      margin: 5px 0;
+      border-radius: 2px;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.35rem;
+      border-radius: 999px;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn--primary {
+      background: var(--green-dark);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(31, 61, 43, 0.25);
+    }
+    .btn--primary:hover { background: #163020; color: var(--white); }
+    .btn--secondary {
+      background: var(--white);
+      color: var(--green-dark);
+      border-color: var(--green-dark);
+    }
+    .btn--secondary:hover { background: var(--beige-light); color: var(--green-dark); }
+    .btn--ghost {
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+    }
+    .btn--ghost:hover { background: rgba(255,255,255,0.25); color: var(--white); }
+
+    /* ── Section helpers ── */
+    section { scroll-margin-top: var(--nav-h); }
+    .section {
+      padding: 5rem 0;
+    }
+    .section--dark {
+      background: var(--green-dark);
+      color: var(--beige-light);
+    }
+    .section--dark h2,
+    .section--dark h3 { color: var(--white); }
+    .section--beige { background: var(--beige); }
+    .section__lead {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 52ch;
+      margin-bottom: 2.5rem;
+    }
+    .section--dark .section__lead { color: rgba(255,255,255,0.75); }
+    .section .container > .tag {
+      display: block;
+      text-align: center;
+    }
+    .section .container > .section-heading,
+    .section .container > .section__lead,
+    .section .container > .kadra-intro,
+    .section .container > .kontakt-intro {
+      text-align: center;
+    }
+    .section .container > .section__lead {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 0.5rem;
+    }
+    .section--dark .tag { color: var(--beige); }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 4rem;
+      margin-top: 0;
+    }
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(31,61,43,0.92) 0%, rgba(31,61,43,0.45) 50%, rgba(31,61,43,0.2) 100%),
+        url("https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1600&q=80") center/cover no-repeat;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      padding-top: calc(var(--nav-h) + 3rem);
+    }
+    .hero__patron {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      margin-bottom: 0.25rem;
+    }
+    .hero__motto {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 500;
+      font-style: italic;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--beige);
+      padding-left: 1rem;
+    }
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ── About grid ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .about-grid__img {
+      aspect-ratio: 4/3;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--green-mid), var(--green-dark));
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      overflow: hidden;
+    }
+    .about-grid__img img { width: 100%; height: 100%; object-fit: cover; }
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .info-card__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--green-mid);
+      margin-bottom: 0.35rem;
+    }
+    .map-placeholder {
+      margin-top: 2.5rem;
+      border-radius: var(--radius);
+      background: var(--white);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .map-placeholder__map {
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #e8e0d4, #c8bca4);
+      display: grid;
+      place-items: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ── Zastępy ── */
+    .zastepy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .zastep-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .zastep-card__img {
+      aspect-ratio: 16/10;
+      background: linear-gradient(160deg, var(--green-mid), var(--beige));
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      font-size: 2.5rem;
+      font-weight: 800;
+      font-family: "Montserrat", sans-serif;
+    }
+    .zastep-card__body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .zastep-card__sklad {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .zastep-card__body .btn { margin-top: auto; align-self: flex-start; }
+
+    /* ── Zastępy — obrys modułów ── */
+    #zastepy .zastep-card {
+      border: 2px solid #000000;
+    }
+
+    /* ── Jak dołączyć — wyoblone moduły ── */
+    #dolacz .zastep-card {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid #000000;
+    }
+    #dolacz .zastep-card__img {
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+    }
+    #dolacz .zastep-card__body {
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+    }
+    #dolacz .zastep-card__placeholder {
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #dolacz .zastep-card__body .btn.zastep-card__placeholder {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    /* ── Kadra — nagłówek ── */
+    #kadra .kadra-intro {
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    #kadra .kadra-intro .section-heading,
+    #kadra .kadra-intro .section__lead {
+      display: block;
+      margin: 0 auto;
+      max-width: none;
+      white-space: normal;
+      margin-bottom: 0;
+    }
+    #kadra .kadra-intro .section-heading {
+      margin-bottom: 0.75rem;
+    }
+
+    #zastepy .section__lead {
+      max-width: none;
+      white-space: nowrap;
+    }
+
+    /* ── Kadra ── */
+    .kadra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .kadra-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .kadra-card--lead {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      text-align: left;
+      align-items: center;
+      background: rgba(255,255,255,0.12);
+    }
+    .kadra-card__avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--beige);
+      color: var(--green-dark);
+      display: grid;
+      place-items: center;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin: 0 auto 1rem;
+    }
+    .kadra-card--lead .kadra-card__avatar {
+      width: 120px;
+      height: 120px;
+      font-size: 1.75rem;
+      margin: 0;
+    }
+    .kadra-card__stopien {
+      font-size: 0.8rem;
+      color: var(--beige);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .kadra-card__desc { font-size: 0.9rem; opacity: 0.85; margin: 0; }
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .social-links a:hover { background: rgba(255,255,255,0.22); }
+
+    /* ── Dołącz ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .step {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .step__num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--green-dark);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .join-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .terminy-list { list-style: none; padding: 0; margin: 0; }
+    .terminy-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(31,61,43,0.1);
+      font-size: 0.95rem;
+    }
+    .terminy-list__day {
+      font-weight: 600;
+      color: var(--green-dark);
+    }
+
+    /* ── Form ── */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid rgba(31,61,43,0.2);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: var(--white);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+
+    /* ── FAQ ── */
+    .faq { margin-top: 2rem; }
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(31,61,43,0.06);
+    }
+    .faq-item summary {
+      padding: 1rem 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-item summary::after { content: "+"; font-size: 1.25rem; color: var(--green-mid); }
+    .faq-item[open] summary::after { content: "−"; }
+    .faq-item__body {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Galeria ── */
+    #galeria .container > .tag,
+    #galeria .container > h2,
+    #galeria .container > .gallery-intro {
+      text-align: center;
+    }
+    #galeria .container > .tag {
+      display: block;
+      font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      margin-bottom: 0.35rem;
+    }
+    #galeria .gallery-intro {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: min(72rem, 100%);
+      margin-bottom: 2.5rem;
+    }
+    #galeria .gallery-intro .section__lead {
+      margin-bottom: 0.35rem;
+      max-width: none;
+    }
+    #galeria .gallery-intro .section__lead:last-child {
+      margin-bottom: 0;
+    }
+    .gallery-filters {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+      padding: 1.25rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .gallery-filters__label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--green-mid);
+      margin-bottom: 0.5rem;
+    }
+    .gallery-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0;
+    }
+    .gallery-tags button,
+    .gallery-tag {
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 61, 43, 0.25);
+      background: var(--beige-light);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .gallery-tags button.active,
+    .gallery-tag.active,
+    .gallery-tags button:hover,
+    .gallery-tag:hover {
+      background: var(--green-dark);
+      color: var(--white);
+      border-color: var(--green-dark);
+    }
+    .gallery-empty {
+      display: none;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .gallery-empty.visible { display: block; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .gallery-item {
+      aspect-ratio: 4/3;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item__label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.5rem 0.75rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.9);
+      place-items: center;
+      padding: 2rem;
+    }
+    .lightbox.open { display: grid; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .lightbox__close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ── Kalendarz ── */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .event-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .event-card__date {
+      text-align: center;
+      min-width: 52px;
+    }
+    .event-card__day {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      line-height: 1;
+    }
+    .event-card__month {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--green-mid);
+    }
+    .event-card__type {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--green-mid);
+      margin-bottom: 0.25rem;
+    }
+    .event-card__title { font-weight: 600; margin-bottom: 0.25rem; }
+    .event-card__place { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+
+    /* ── Kontakt ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .contact-info { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .contact-info li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .contact-info__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--green-dark);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.7);
+      padding: 2.5rem 0;
+      font-size: 0.875rem;
+    }
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer a { color: var(--beige); }
+
+    /* ── Mockup banner ── */
+    .mockup-banner {
+      background: #C45C26;
+      color: var(--white);
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .about-grid,
+      .join-layout,
+      .contact-grid,
+      .map-placeholder { grid-template-columns: 1fr; }
+      .info-cards,
+      .steps { grid-template-columns: 1fr; }
+      .kadra-card--lead { grid-template-columns: 1fr; text-align: center; }
+      .kadra-card--lead .kadra-card__avatar { margin: 0 auto; }
+      .nav__links {
+        display: none;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--white);
+        padding: 1rem;
+        border-bottom: 1px solid rgba(31,61,43,0.08);
+        box-shadow: var(--shadow);
+      }
+      .nav__links.open { display: flex; }
+      .nav__toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nawigacja ── -->
+  <nav class="nav" aria-label="Główna nawigacja">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="#hero">
+        <span class="nav__logo">ZHR</span>
+        <span>Drużyna [Nazwa]</span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#o-drużynie">O drużynie</a></li>
+        <li><a href="#zastepy">Zastępy</a></li>
+        <li><a href="#kadra">Kadra</a></li>
+        <li><a href="#dolacz">Jak dołączyć</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#kalendarz">Kalendarz</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── 1. HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" role="img" aria-label="Zdjęcie drużyny na obozie — placeholder"></div>
+    <div class="container hero__content">
+      <p class="hero__patron">Patron: <strong>św. [Imię Patrona]</strong></p>
+      <h1>Drużyna [Nazwa]</h1>
+      <p class="hero__motto">„[Motto / okrzyk drużyny — np. Czuwaj!]”</p>
+      <div class="hero__actions">
+        <a href="#o-drużynie" class="btn btn--ghost">O drużynie</a>
+        <a href="#kontakt" class="btn btn--ghost">Kontakt</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. O DRUŻYNIE ── -->
+  <section class="section" id="o-drużynie">
+    <div class="container">
+      <span class="tag">O drużynie</span>
+      <h2>Kim jesteśmy</h2>
+      <p class="section__lead">Krótka historia, tradycja i charakter drużyny — miejsce na opis kilku akapitów o tym, skąd drużyna się wzięła i co ją wyróżnia.</p>
+
+      <div class="about-grid">
+        <div>
+          <p>Drużyna [Nazwa] działa w [Hufiec], w chorągwi [Chorągiew], od roku [XXXX]. Harcuje w [Miasto] i okolicach, łącząc tradycję z nowoczesnym programem.</p>
+          <p>Nasz patron — <strong>św. [Imię]</strong> — inspiruje nas do [cnota / wartość]. W codziennym harcerskim życiu kierujemy się zasadami ZHP i wartościami, które przekazujemy z pokolenia na pokolenie.</p>
+          <p><em>Tradycje:</em> [np. coroczny rajd, wigilia drużynowa, śpiewy przy ognisku, własne barwy i znak drużyny]</p>
+        </div>
+        <div class="about-grid__img">
+          <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800&q=80" alt="Patron drużyny — placeholder" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card__label">Barwy</div>
+          <p style="margin:0;">Ciemnozielony · Beż · Biel<br /><small style="color:var(--text-muted)">[Opis symboliki barw]</small></p>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Okrzyk</div>
+          <p style="margin:0;font-weight:600;">„[Okrzyk drużyny]”</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Symbolika</div>
+          <p style="margin:0;">[Opis znaku drużyny, elementów herbu, znaczenia]</p>
+        </div>
+      </div>
+
+      <div class="map-placeholder">
+        <div>
+          <h3>Mapa działania</h3>
+          <p style="margin:0;color:var(--text-muted);">
+            <strong>Miasto:</strong> [Miasto]<br />
+            <strong>Hufiec:</strong> [Hufiec ZHR]<br />
+            <strong>Chorągiew:</strong> [Chorągiew ZHR]
+          </p>
+        </div>
+        <div class="map-placeholder__map" aria-hidden="true">Mapa — placeholder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. ZASTĘPY ── -->
+  <section class="section section--beige" id="zastepy">
+    <div class="container">
+      <h2 class="section-heading">Zastępy</h2>
+      <p class="section__lead">Poznaj zastępy drużyny — każdy ma swój charakter, znak i skład. Dane wrażliwe nie są publikowane.</p>
+
+      <div class="zastepy-grid">
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">🦅</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 1]</h3>
+            <p class="zastep-card__sklad">Skład: 8 harcerzy · Wiek: 13–16 lat</p>
+            <p>[Krótki opis charakteru zastępu — np. rajdy, mapa i kompas, zwinność]</p>
+          </div>
+        </article>
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">🌲</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 2]</h3>
+            <p class="zastep-card__sklad">Skład: 7 harcerzy · Wiek: 13–15 lat</p>
+            <p>[Opis — np. biwaki, survival, praca zespołowa]</p>
+          </div>
+        </article>
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">🔥</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 3]</h3>
+            <p class="zastep-card__sklad">Skład: 9 harcerzy · Wiek: 14–16 lat</p>
+            <p>[Opis — np. służba, pomoc, akcje społeczne]</p>
+          </div>
+        </article>
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">⭐</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 4]</h3>
+            <p class="zastep-card__sklad">Skład: 8 harcerzy · Wiek: 13–16 lat</p>
+            <p>[Opis — np. program, charakter, specjalizacja zastępu]</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. KADRA ── -->
+  <section class="section section--dark" id="kadra">
+    <div class="container">
+      <div class="kadra-intro">
+        <h2 class="section-heading">Kadra</h2>
+        <p class="section__lead">Poznaj drużynowego, przybocznych i kwatermistrza — osoby, z którymi możesz się skontaktować.</p>
+      </div>
+
+      <div class="kadra-grid">
+        <article class="kadra-card kadra-card--lead">
+          <div class="kadra-card__avatar">JD</div>
+          <div>
+            <p class="kadra-card__stopien">Drużynowy · hr. [Stopień]</p>
+            <h3>[Imię Nazwisko]</h3>
+            <p class="kadra-card__desc">Krótki opis — doświadczenie, pasje, jak długo pełni funkcję. Główny kontakt dla rodziców i nowych członków.</p>
+            <p style="margin:0.5rem 0 0;font-size:0.9rem;">📧 druzynowy@example.pl · 📞 [telefon]</p>
+          </div>
+        </article>
+
+        <article class="kadra-card">
+          <div class="kadra-card__avatar">AK</div>
+          <p class="kadra-card__stopien">Przyboczny · hr. [Stopień]</p>
+          <h3>[Imię Nazwisko]</h3>
+          <p class="kadra-card__desc">Opiekun zastępu [Nazwa]</p>
+        </article>
+
+        <article class="kadra-card">
+          <div class="kadra-card__avatar">MN</div>
+          <p class="kadra-card__stopien">Przyboczny · hr. [Stopień]</p>
+          <h3>[Imię Nazwisko]</h3>
+          <p class="kadra-card__desc">Opiekunka zastępu [Nazwa]</p>
+        </article>
+
+        <article class="kadra-card">
+          <div class="kadra-card__avatar">PW</div>
+          <p class="kadra-card__stopien">Kwatermistrz · hr. [Stopień]</p>
+          <h3>[Imię Nazwisko]</h3>
+          <p class="kadra-card__desc">Sprzęt, logistyka, obozy</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. JAK DOŁĄCZYĆ ── -->
+  <section class="section" id="dolacz">
+    <div class="container">
+      <h2 class="section-heading">Jak dołączyć?</h2>
+
+      <div class="zastepy-grid">
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">🦅</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 1]</h3>
+            <p class="zastep-card__sklad zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <p class="zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <a href="#" class="btn btn--secondary zastep-card__placeholder" aria-hidden="true" tabindex="-1">&nbsp;</a>
+          </div>
+        </article>
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">🌲</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 2]</h3>
+            <p class="zastep-card__sklad zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <p class="zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <a href="#" class="btn btn--secondary zastep-card__placeholder" aria-hidden="true" tabindex="-1">&nbsp;</a>
+          </div>
+        </article>
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">🔥</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 3]</h3>
+            <p class="zastep-card__sklad zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <p class="zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <a href="#" class="btn btn--secondary zastep-card__placeholder" aria-hidden="true" tabindex="-1">&nbsp;</a>
+          </div>
+        </article>
+        <article class="zastep-card">
+          <div class="zastep-card__img" aria-hidden="true">⭐</div>
+          <div class="zastep-card__body">
+            <h3>Zastęp [Nazwa 4]</h3>
+            <p class="zastep-card__sklad zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <p class="zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+            <a href="#" class="btn btn--secondary zastep-card__placeholder" aria-hidden="true" tabindex="-1">&nbsp;</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6. GALERIA ── -->
+  <section class="section section--beige" id="galeria">
+    <div class="container">
+      <span class="tag">Galeria</span>
+      <h2>Życie drużyny</h2>
+      <div class="gallery-intro">
+        <p class="section__lead">Po wejściu w galerię widać wszystkie zdjęcia. Wybierz zastęp — przycisk pozostaje podświetlony.</p>
+        <p class="section__lead">Opcjonalnie zawęź wyniki tagiem typu aktywności.</p>
+      </div>
+
+      <div class="gallery-filters">
+        <div class="gallery-filters__group">
+          <span class="gallery-filters__label">Zastęp</span>
+          <div class="gallery-tags" role="tablist" aria-label="Filtruj według zastępu">
+            <button type="button" class="gallery-tag" data-filter="zastep" data-value="1">Zastęp [Nazwa 1]</button>
+            <button type="button" class="gallery-tag" data-filter="zastep" data-value="2">Zastęp [Nazwa 2]</button>
+            <button type="button" class="gallery-tag" data-filter="zastep" data-value="3">Zastęp [Nazwa 3]</button>
+            <button type="button" class="gallery-tag" data-filter="zastep" data-value="4">Zastęp [Nazwa 4]</button>
+          </div>
+        </div>
+        <div class="gallery-filters__group">
+          <span class="gallery-filters__label">Typ aktywności</span>
+          <div class="gallery-tags gallery-tags--type">
+            <button type="button" class="gallery-tag" data-filter="type" data-value="oboz">Obóz</button>
+            <button type="button" class="gallery-tag" data-filter="type" data-value="biwak">Biwak</button>
+            <button type="button" class="gallery-tag" data-filter="type" data-value="akcja">Akcja</button>
+            <button type="button" class="gallery-tag" data-filter="type" data-value="zbiorka">Zbiórka</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="gallery-empty" id="galleryEmpty" role="status">Brak zdjęć dla wybranych tagów.</p>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item" data-zastep="1" data-tags="oboz,2025,publiczne" data-full="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=70" alt="Obóz 2025 — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Obóz 2025 · Zastęp [Nazwa 1]</span>
+        </div>
+        <div class="gallery-item" data-zastep="1" data-tags="oboz,2025,publiczne" data-full="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=400&q=70" alt="Ognisko obozowe — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Ognisko obozowe · Zastęp [Nazwa 1]</span>
+        </div>
+        <div class="gallery-item" data-zastep="1" data-tags="zbiorka,2026,publiczne" data-full="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=400&q=70" alt="Zbiórka — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 1]</span>
+        </div>
+        <div class="gallery-item" data-zastep="2" data-tags="biwak,2025,publiczne" data-full="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=400&q=70" alt="Biwak zimowy — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Biwak zimowy · Zastęp [Nazwa 2]</span>
+        </div>
+        <div class="gallery-item" data-zastep="2" data-tags="biwak,2026,publiczne" data-full="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=400&q=70" alt="Biwak — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Biwak · Zastęp [Nazwa 2]</span>
+        </div>
+        <div class="gallery-item" data-zastep="3" data-tags="akcja,2026,publiczne" data-full="https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=70" alt="Akcja — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Akcja · Zastęp [Nazwa 3]</span>
+        </div>
+        <div class="gallery-item" data-zastep="3" data-tags="zbiorka,2025,publiczne" data-full="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=70" alt="Zbiórka — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 3]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="akcja,2025,publiczne" data-full="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=70" alt="Akcja społeczna — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Akcja społeczna · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="oboz,2026,publiczne" data-full="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=1200&q=80">
+          <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=400&q=70" alt="Obóz — placeholder" loading="lazy" />
+          <span class="gallery-item__label">Obóz · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="zbiorka,2026,publiczne" data-full="galeria/zastep-4-zbiorka/zbiorka-01.jpg">
+          <img src="galeria/zastep-4-zbiorka/zbiorka-01.jpg" alt="Zbiórka — Zastęp [Nazwa 4]" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="zbiorka,2026,publiczne" data-full="galeria/zastep-4-zbiorka/zbiorka-02.jpg">
+          <img src="galeria/zastep-4-zbiorka/zbiorka-02.jpg" alt="Zbiórka — Zastęp [Nazwa 4]" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="zbiorka,2026,publiczne" data-full="galeria/zastep-4-zbiorka/zbiorka-03.jpg">
+          <img src="galeria/zastep-4-zbiorka/zbiorka-03.jpg" alt="Zbiórka — Zastęp [Nazwa 4]" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="zbiorka,2026,publiczne" data-full="galeria/zastep-4-zbiorka/zbiorka-04.jpg">
+          <img src="galeria/zastep-4-zbiorka/zbiorka-04.jpg" alt="Zbiórka — Zastęp [Nazwa 4]" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="zbiorka,2026,publiczne" data-full="galeria/zastep-4-zbiorka/zbiorka-05.jpg">
+          <img src="galeria/zastep-4-zbiorka/zbiorka-05.jpg" alt="Zbiórka — Zastęp [Nazwa 4]" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 4]</span>
+        </div>
+        <div class="gallery-item" data-zastep="4" data-tags="zbiorka,2026,publiczne" data-full="galeria/zastep-4-zbiorka/zbiorka-06.jpg">
+          <img src="galeria/zastep-4-zbiorka/zbiorka-06.jpg" alt="Zbiórka · Zastęp [Nazwa 4]" loading="lazy" />
+          <span class="gallery-item__label">Zbiórka · Zastęp [Nazwa 4]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Lightbox ── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Zamknij">&times;</button>
+    <img src="" alt="" id="lightboxImg" />
+  </div>
+
+  <!-- ── 7. KALENDARZ ── -->
+  <section class="section" id="kalendarz">
+    <div class="container">
+      <h2 class="section-heading">Nadchodzące wydarzenia</h2>
+      <p class="section__lead">Zbiórki, wyjazdy i wydarzenia hufca / chorągwi.</p>
+
+      <div class="calendar-grid">
+        <article class="event-card">
+          <div class="event-card__date">
+            <div class="event-card__day">06</div>
+            <div class="event-card__month">Wrz</div>
+          </div>
+          <div>
+            <div class="event-card__type">Zbiórka drużyny</div>
+            <div class="event-card__title">Zbiórka programowa</div>
+            <p class="event-card__place">📍 [Miejsce] · 17:00</p>
+          </div>
+        </article>
+        <article class="event-card">
+          <div class="event-card__date">
+            <div class="event-card__day">20</div>
+            <div class="event-card__month">Wrz</div>
+          </div>
+          <div>
+            <div class="event-card__type">Wyjazd</div>
+            <div class="event-card__title">Rajd zastępów</div>
+            <p class="event-card__place">📍 [Trasa] · całodniowy</p>
+          </div>
+        </article>
+        <article class="event-card">
+          <div class="event-card__date">
+            <div class="event-card__day">04</div>
+            <div class="event-card__month">Paź</div>
+          </div>
+          <div>
+            <div class="event-card__type">Wydarzenie hufca</div>
+            <div class="event-card__title">Dzień hufca</div>
+            <p class="event-card__place">📍 [Miejsce hufca]</p>
+          </div>
+        </article>
+        <article class="event-card">
+          <div class="event-card__date">
+            <div class="event-card__day">18</div>
+            <div class="event-card__month">Paź</div>
+          </div>
+          <div>
+            <div class="event-card__type">Wydarzenie chorągwi</div>
+            <div class="event-card__title">Zlot chorągwi</div>
+            <p class="event-card__place">📍 [Miejsce]</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 8. KONTAKT ── -->
+  <section class="section section--dark" id="kontakt">
+    <div class="container">
+      <span class="tag">Kontakt</span>
+      <h2>Skontaktuj się z nami</h2>
+      <p class="section__lead">Mail i telefon — szybka droga do drużynowego.</p>
+
+      <div class="contact-grid">
+        <div>
+          <ul class="contact-info">
+            <li>
+              <span class="contact-info__icon">✉</span>
+              <div>
+                <strong>E-mail drużynowego</strong><br />
+                <a href="mailto:druzynowy@example.pl" style="color:var(--beige);">druzynowy@example.pl</a>
+              </div>
+            </li>
+            <li>
+              <span class="contact-info__icon">📞</span>
+              <div>
+                <strong>Telefon</strong><br />
+                <a href="tel:+48123456789" style="color:var(--beige);">+48 123 456 789</a>
+              </div>
+            </li>
+          </ul>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="Instagram">IG</a>
+          </div>
+        </div>
+
+        <div>
+          <form action="#" method="post" onsubmit="event.preventDefault(); alert('Mockup — formularz nie wysyła danych.');">
+            <div class="form-group">
+              <label for="c-name" style="color:var(--beige-light);">Imię i nazwisko</label>
+              <input type="text" id="c-name" name="name" />
+            </div>
+            <div class="form-group">
+              <label for="c-email" style="color:var(--beige-light);">E-mail</label>
+              <input type="email" id="c-email" name="email" />
+            </div>
+            <div class="form-group">
+              <label for="c-msg" style="color:var(--beige-light);">Wiadomość</label>
+              <textarea id="c-msg" name="msg"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Wyślij</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© 2026 Drużyna [Nazwa] · ZHR</span>
+      <span>Mockup wstępny — dane do uzupełnienia</span>
+    </div>
+  </footer>
+
+  <div class="mockup-banner" role="status">
+    Wstępny mockup — placeholdery w nawiasach [ ] czekają na dane drużyny. Otwórz przez ikonę ZHR na pulpicie.
+  </div>
+
+  <script>
+    // Mobile nav
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        if (a.getAttribute('href') === '#galeria') resetGalleryFilters();
+      });
+    });
+
+    // Galeria — zastęp (trwałe podświetlenie) + opcjonalny tag typu
+    const galleryTagBtns = document.querySelectorAll('.gallery-tag');
+    const galleryZastepBtns = document.querySelectorAll('.gallery-tag[data-filter="zastep"]');
+    const gallerySecondaryBtns = document.querySelectorAll('.gallery-tag[data-filter="type"]');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryEmpty = document.getElementById('galleryEmpty');
+    let activeZastep = null;
+    let activeSecondary = null;
+
+    function resetGalleryFilters() {
+      activeZastep = null;
+      activeSecondary = null;
+      galleryTagBtns.forEach(b => b.classList.remove('active'));
+      applyGalleryFilters();
+    }
+
+    function applyGalleryFilters() {
+      let visibleCount = 0;
+
+      galleryItems.forEach(item => {
+        const tags = (item.dataset.tags || '').split(',');
+        let show = true;
+
+        if (activeZastep) show = item.dataset.zastep === activeZastep;
+        if (show && activeSecondary) {
+          show = tags.includes(activeSecondary.value);
+        }
+
+        item.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      galleryEmpty.classList.toggle('visible', visibleCount === 0);
+    }
+
+    galleryZastepBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const value = btn.dataset.value;
+        if (activeZastep === value) return;
+
+        galleryZastepBtns.forEach(b => b.classList.remove('active'));
+        activeZastep = value;
+        btn.classList.add('active');
+        applyGalleryFilters();
+      });
+    });
+
+    gallerySecondaryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isActive = btn.classList.contains('active');
+        gallerySecondaryBtns.forEach(b => b.classList.remove('active'));
+
+        if (isActive) {
+          activeSecondary = null;
+        } else {
+          activeSecondary = { filter: btn.dataset.filter, value: btn.dataset.value };
+          btn.classList.add('active');
+        }
+
+        applyGalleryFilters();
+      });
+    });
+
+    window.addEventListener('hashchange', () => {
+      if (location.hash === '#galeria') resetGalleryFilters();
+    });
+
+    if (location.hash === '#galeria') resetGalleryFilters();
+    else applyGalleryFilters();
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        lightboxImg.src = item.dataset.full;
+        lightboxImg.alt = item.querySelector('img').alt;
+        lightbox.classList.add('open');
+      });
+    });
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) lightbox.classList.remove('open');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') lightbox.classList.remove('open');
+    });
+  </script>
+</body>
+</html>

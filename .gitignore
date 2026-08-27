@@ -1,0 +1,17 @@
+# Astro (web/)
+web/node_modules/
+web/dist/
+web/.astro/
+
+# logi i cache
+*.log
+npm-debug.log*
+
+# środowisko
+.env
+.env.*
+
+# system
+.DS_Store
+Thumbs.db
+.idea/

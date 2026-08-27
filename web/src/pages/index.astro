@@ -1,0 +1,238 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/Gallery.astro';
+import { loadSite, loadGallery } from '../lib/content';
+
+const site = loadSite();
+const galleryItems = loadGallery();
+const heroBg = `url("${site.hero.backgroundImage}")`;
+---
+
+<Layout>
+  <section class="hero" id="hero">
+    <div
+      class="hero__bg"
+      role="img"
+      aria-label="Zdjęcie drużyny"
+      style={`--hero-bg-image: ${heroBg}`}
+    ></div>
+    <div class="container hero__content">
+      <p class="hero__patron">Patron: <strong>{site.hero.patron}</strong></p>
+      <h1>{site.hero.title}</h1>
+      <p class="hero__motto">„{site.hero.motto}”</p>
+      <div class="hero__actions">
+        <a href="#o-drużynie" class="btn btn--ghost">O drużynie</a>
+        <a href="#kontakt" class="btn btn--ghost">Kontakt</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="o-drużynie">
+    <div class="container">
+      <span class="tag">{site.about.tag}</span>
+      <h2 class="section-heading">{site.about.title}</h2>
+      <p class="section__lead">{site.about.lead}</p>
+
+      <div class="about-grid">
+        <div>
+          <p>{site.about.paragraph1}</p>
+          <p>{site.about.paragraph2}</p>
+          <p><em>Tradycje:</em> {site.about.traditions}</p>
+        </div>
+        <div class="about-grid__img">
+          <img src={site.about.image} alt="O drużynie" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card__label">Barwy</div>
+          <p style="margin:0;">{site.about.barwy}<br /><small style="color:var(--text-muted)">{site.about.barwyOpis}</small></p>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Okrzyk</div>
+          <p style="margin:0;font-weight:600;">„{site.about.okrzyk}”</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">Symbolika</div>
+          <p style="margin:0;">{site.about.symbolika}</p>
+        </div>
+      </div>
+
+      <div class="map-placeholder">
+        <div>
+          <h3>Mapa działania</h3>
+          <p style="margin:0;color:var(--text-muted);">
+            <strong>Miasto:</strong> {site.about.miasto}<br />
+            <strong>Hufiec:</strong> {site.about.hufiec}<br />
+            <strong>Chorągiew:</strong> {site.about.choragiew}
+          </p>
+        </div>
+        <div class="map-placeholder__map" aria-hidden="true">Mapa — placeholder</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--beige" id="zastepy">
+    <div class="container">
+      <h2 class="section-heading">{site.zastepy.title}</h2>
+      <p class="section__lead">{site.zastepy.lead}</p>
+
+      <div class="zastepy-grid">
+        {site.zastepy.items.map((z) => (
+          <article class="zastep-card">
+            <div class="zastep-card__img" aria-hidden="true">{z.emoji}</div>
+            <div class="zastep-card__body">
+              <h3>{z.name}</h3>
+              <p class="zastep-card__sklad">{z.sklad}</p>
+              <p>{z.opis}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" id="kadra">
+    <div class="container">
+      <div class="kadra-intro">
+        <h2 class="section-heading">{site.kadra.tag}</h2>
+        <p class="section__lead">{site.kadra.lead}</p>
+      </div>
+
+      <div class="kadra-grid">
+        {site.kadra.items.map((k) => (
+          <article class:list={['kadra-card', k.lead && 'kadra-card--lead']}>
+            <div class="kadra-card__avatar">{k.initials}</div>
+            {k.lead ? (
+              <div>
+                <p class="kadra-card__stopien">{k.stopien}</p>
+                <h3>{k.name}</h3>
+                <p class="kadra-card__desc">{k.opis}</p>
+                {k.kontakt && <p style="margin:0.5rem 0 0;font-size:0.9rem;">{k.kontakt}</p>}
+              </div>
+            ) : (
+              <>
+                <p class="kadra-card__stopien">{k.stopien}</p>
+                <h3>{k.name}</h3>
+                <p class="kadra-card__desc">{k.opis}</p>
+              </>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="dolacz">
+    <div class="container">
+      <h2 class="section-heading">{site.dolacz.title}</h2>
+
+      <div class="zastepy-grid">
+        {site.zastepy.items.map((z) => (
+          <article class="zastep-card">
+            <div class="zastep-card__img" aria-hidden="true">{z.emoji}</div>
+            <div class="zastep-card__body">
+              <h3>{z.name}</h3>
+              <p class="zastep-card__sklad zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+              <p class="zastep-card__placeholder" aria-hidden="true">&nbsp;</p>
+              <a href="#" class="btn btn--secondary zastep-card__placeholder" aria-hidden="true" tabindex="-1">&nbsp;</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Gallery
+    tag={site.galeria.tag}
+    title={site.galeria.title}
+    introLine1={site.galeria.introLine1}
+    introLine2={site.galeria.introLine2}
+    zastepy={site.zastepy.items.map((z) => ({ id: z.id, name: z.name }))}
+    items={galleryItems}
+  />
+
+  <section class="section" id="kalendarz">
+    <div class="container">
+      <h2 class="section-heading">{site.kalendarz.title}</h2>
+      <p class="section__lead">{site.kalendarz.lead}</p>
+
+      <div class="calendar-grid">
+        {site.kalendarz.events.map((ev) => (
+          <article class="event-card">
+            <div class="event-card__date">
+              <div class="event-card__day">{ev.day}</div>
+              <div class="event-card__month">{ev.month}</div>
+            </div>
+            <div>
+              <div class="event-card__type">{ev.type}</div>
+              <div class="event-card__title">{ev.title}</div>
+              <p class="event-card__place">{ev.place}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" id="kontakt">
+    <div class="container">
+      <div class="kontakt-intro">
+        <h2 class="section-heading">{site.kontakt.title}</h2>
+        <p class="section__lead">{site.kontakt.lead}</p>
+      </div>
+
+      <div class="contact-grid">
+        <div>
+          <ul class="contact-info">
+            <li>
+              <span class="contact-info__icon">✉</span>
+              <div>
+                <strong>E-mail drużynowego</strong><br />
+                <a href={`mailto:${site.kontakt.email}`} style="color:var(--beige);">{site.kontakt.email}</a>
+              </div>
+            </li>
+            <li>
+              <span class="contact-info__icon">📞</span>
+              <div>
+                <strong>Telefon</strong><br />
+                <a href={`tel:${site.kontakt.phone.replace(/\s/g, '')}`} style="color:var(--beige);">{site.kontakt.phone}</a>
+              </div>
+            </li>
+          </ul>
+          <div class="social-links">
+            <a href={site.kontakt.facebook} aria-label="Facebook">FB</a>
+            <a href={site.kontakt.instagram} aria-label="Instagram">IG</a>
+          </div>
+        </div>
+
+        <div>
+          <form action="#" method="post" onsubmit="event.preventDefault(); alert('Formularz demo — w produkcji podłącz Netlify Forms lub inny serwis.');">
+            <div class="form-group">
+              <label for="c-name" style="color:var(--beige-light);">Imię i nazwisko</label>
+              <input type="text" id="c-name" name="name" />
+            </div>
+            <div class="form-group">
+              <label for="c-email" style="color:var(--beige-light);">E-mail</label>
+              <input type="email" id="c-email" name="email" />
+            </div>
+            <div class="form-group">
+              <label for="c-msg" style="color:var(--beige-light);">Wiadomość</label>
+              <textarea id="c-msg" name="msg"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Wyślij</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  .hero__bg {
+    background:
+      linear-gradient(to top, rgba(31,61,43,0.92) 0%, rgba(31,61,43,0.45) 50%, rgba(31,61,43,0.2) 100%),
+      var(--hero-bg-image, url("https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1600&q=80")) center/cover no-repeat;
+  }
+</style>

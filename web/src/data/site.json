@@ -1,0 +1,163 @@
+{
+  "kontakt": {
+    "tag": "Kontakt",
+    "title": "Skontaktuj się z nami",
+    "lead": "Mail i telefon — szybka droga do drużynowego.",
+    "email": "druzynowy@example.pl",
+    "phone": "+48 123 456 789",
+    "facebook": "#",
+    "instagram": "#"
+  },
+  "kalendarz": {
+    "tag": "",
+    "title": "Nadchodzące wydarzenia",
+    "lead": "Zbiórki, wyjazdy i wydarzenia hufca / chorągwi.",
+    "events": [
+      {
+        "day": "06",
+        "month": "Wrz",
+        "type": "Zbiórka drużyny",
+        "title": "Zbiórka programowa",
+        "place": "📍 [Miejsce] · 17:00"
+      },
+      {
+        "day": "20",
+        "month": "Wrz",
+        "type": "Wyjazd",
+        "title": "Rajd zastępów",
+        "place": "📍 [Trasa] · całodniowy"
+      },
+      {
+        "day": "04",
+        "month": "Paź",
+        "type": "Wydarzenie hufca",
+        "title": "Dzień hufca",
+        "place": "📍 [Miejsce hufca]"
+      },
+      {
+        "day": "18",
+        "month": "Paź",
+        "type": "Wydarzenie chorągwi",
+        "title": "Zlot chorągwi",
+        "place": "📍 [Miejsce]"
+      }
+    ]
+  },
+  "meta": {
+    "title": "Drużyna [Nazwa] — ZHR",
+    "description": "trona drużyny harcerskiej ZHR — dołącz, poznaj zastępy, kalendarz i kontakt."
+  },
+  "zastepy": {
+    "tag": "",
+    "title": "Zastępy",
+    "lead": "Poznaj zastępy drużyny — każdy ma swój charakter, znak i skład. Dane wrażliwe nie są publikowane.",
+    "items": [
+      {
+        "id": "1",
+        "name": "Leśne Oczy",
+        "emoji": "🦅",
+        "sklad": "Skład: 25 harcerzy · ",
+        "opis": "[Krótki opis charakteru zastępu — np. rajdy, mapa i kompas, zwinność]"
+      },
+      {
+        "id": "2",
+        "name": "Zastęp [Nazwa 2]",
+        "emoji": "🌲",
+        "sklad": "Skład: 7 harcerzy · Wiek: 13–15 lat",
+        "opis": "[Opis — np. biwaki, survival, praca zespołowa]"
+      },
+      {
+        "id": "3",
+        "name": "Zastęp [Nazwa 3]",
+        "emoji": "🔥",
+        "sklad": "Skład: 9 harcerzy · Wiek: 14–16 lat",
+        "opis": "[Opis — np. służba, pomoc, akcje społeczne]"
+      },
+      {
+        "id": "4",
+        "name": "Zastęp [Nazwa 4]",
+        "emoji": "⭐",
+        "sklad": "Skład: 8 harcerzy · Wiek: 13–16 lat",
+        "opis": "[Opis — np. program, charakter, specjalizacja zastępu]"
+      }
+    ]
+  },
+  "brand": {
+    "name": "Drużyna [Nazwa]"
+  },
+  "about": {
+    "barwyOpis": "[Opis symboliki barw]",
+    "paragraph1": "Drużyna [Nazwa] działa w [Hufiec], w chorągwi [Chorągiew], od roku [XXXX]. Harcuje w [Miasto] i okolicach, łącząc tradycję z nowoczesnym programem.",
+    "paragraph2": "Nasz patron — św. [Imię] — inspiruje nas do [cnota / wartość]. W codziennym harcerskim życiu kierujemy się zasadami ZHP i wartościami, które przekazujemy z pokolenia na pokolenie.",
+    "symbolika": "[Opis znaku drużyny, elementów herbu, znaczenia]",
+    "miasto": "[Miasto]",
+    "choragiew": "[Chorągiew ZHR]",
+    "hufiec": "[Hufiec ZHR]",
+    "barwy": "Czerwono-czarny",
+    "okrzyk": "[Okrzyk drużyny]",
+    "traditions": "[np. coroczny rajd, wigilia drużynowa, śpiewy przy ognisku, własne barwy i znak drużyny]",
+    "title": "Kim jesteśmy",
+    "tag": "O drużynie",
+    "image": "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800&q=80",
+    "lead": "Krótka historia, tradycja i charakter drużyny — miejsce na opis kilku akapitów o tym, skąd drużyna się wzięła i co ją wyróżnia."
+  },
+  "galeria": {
+    "tag": "Galeria",
+    "title": "Życie drużyny",
+    "introLine1": "Po wejściu w galerię widać wszystkie zdjęcia. Wybierz zastęp — przycisk pozostaje podświetlony.",
+    "introLine2": "Opcjonalnie zawęź wyniki tagiem typu aktywności."
+  },
+  "dolacz": {
+    "tag": "",
+    "title": "Jak dołączyć?"
+  },
+  "hero": {
+    "patron": "Św. Brunon",
+    "title": "Apsztyfikultyfikiewicz",
+    "motto": "Urrrrrrrrrrrrrrrrrrrrrrrrrrrrrrraaaaaaaaaaaaaaaa!",
+    "backgroundImage": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1600&q=80"
+  },
+  "footer": {
+    "copyright": "© 2026 Drużyna [Nazwa] · ZHR",
+    "note": "Strona drużyny ZHR"
+  },
+  "kadra": {
+    "tag": "Kadra",
+    "title": " ",
+    "lead": "Poznaj drużynowego, przybocznych i kwatermistrza — osoby, z którymi możesz się skontaktować.",
+    "items": [
+      {
+        "initials": "JD",
+        "stopien": "Drużynowy · hr. [Stopień]",
+        "name": "[Imię Nazwisko]",
+        "opis": "Krótki opis — doświadczenie, pasje, jak długo pełni funkcję. Główny kontakt dla rodziców i nowych członków.",
+        "kontakt": "📧 druzynowy@example.pl · 📞 [telefon]",
+        "lead": true
+      },
+      {
+        "initials": "AK",
+        "stopien": "Przyboczny · hr. [Stopień]",
+        "name": "[Imię Nazwisko]",
+        "opis": "Opiekun zastępu [Nazwa]",
+        "kontakt": "",
+        "lead": false
+      },
+      {
+        "initials": "MN",
+        "stopien": "Przyboczny · hr. [Stopień]",
+        "name": "[Imię Nazwisko]",
+        "opis": "Opiekunka zastępu [Nazwa]",
+        "kontakt": "",
+        "lead": false
+      },
+      {
+        "initials": "PW",
+        "stopien": "Kwatermistrz · hr. [Stopień]",
+        "name": "[Imię Nazwisko]",
+        "opis": "Sprzęt, logistyka, obozy",
+        "kontakt": "",
+        "lead": false
+      }
+    ]
+  }
+}
