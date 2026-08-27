@@ -5,7 +5,7 @@ local_backend: true
 backend:
   name: git-gateway
   branch: main
-media_folder: public/uploads
+media_folder: web/public/uploads
 public_folder: /uploads
 
 locale: pl
@@ -14,7 +14,7 @@ collections:
   - name: gallery
     label: Galeria
     label_singular: Zdjęcie
-    folder: src/content/gallery
+    folder: web/src/content/gallery
     create: true
     slug: "{{slug}}"
     extension: json
@@ -50,7 +50,7 @@ collections:
     files:
       - name: settings
         label: Ustawienia i teksty
-        file: src/data/site.json
+        file: web/src/data/site.json
         fields:
           - label: SEO
             name: meta
