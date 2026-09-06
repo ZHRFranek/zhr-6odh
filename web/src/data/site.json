@@ -61,21 +61,21 @@
       },
       {
         "id": "2",
-        "name": "Zastęp [Nazwa 2]",
-        "emoji": "🌲",
+        "name": "Klucz",
+        "emoji": "🔑",
         "sklad": "Skład: 7 harcerzy · Wiek: 13–15 lat",
         "opis": "[Opis — np. biwaki, survival, praca zespołowa]"
       },
       {
         "id": "3",
-        "name": "Zastęp [Nazwa 3]",
+        "name": "Chmara",
         "emoji": "🔥",
         "sklad": "Skład: 9 harcerzy · Wiek: 14–16 lat",
         "opis": "[Opis — np. służba, pomoc, akcje społeczne]"
       },
       {
         "id": "4",
-        "name": "Zastęp [Nazwa 4]",
+        "name": "Lot",
         "emoji": "⭐",
         "sklad": "Skład: 8 harcerzy · Wiek: 13–16 lat",
         "opis": "[Opis — np. program, charakter, specjalizacja zastępu]"
@@ -90,10 +90,10 @@
     "paragraph1": "Drużyna [Nazwa] działa w [Hufiec], w chorągwi [Chorągiew], od roku [XXXX]. Harcuje w [Miasto] i okolicach, łącząc tradycję z nowoczesnym programem.",
     "paragraph2": "Nasz patron — św. [Imię] — inspiruje nas do [cnota / wartość]. W codziennym harcerskim życiu kierujemy się zasadami ZHP i wartościami, które przekazujemy z pokolenia na pokolenie.",
     "symbolika": "[Opis znaku drużyny, elementów herbu, znaczenia]",
-    "miasto": "[Miasto]",
+    "miasto": "Olsztyn",
     "choragiew": "[Chorągiew ZHR]",
     "hufiec": "[Hufiec ZHR]",
-    "barwy": "Czerwono-czarny",
+    "barwy": "Szaro-zielony",
     "okrzyk": "[Okrzyk drużyny]",
     "traditions": "[np. coroczny rajd, wigilia drużynowa, śpiewy przy ognisku, własne barwy i znak drużyny]",
     "title": "Kim jesteśmy",
@@ -112,7 +112,7 @@
     "title": "Jak dołączyć?"
   },
   "hero": {
-    "patron": "św. Antoni",
+    "patron": "Hm. Por. Andrzej Tomicki ps. Morro",
     "title": "I z dziecinną radością pociągnął za sznurek, by stary Dąbrowskiego posłyszeć Mazurek.",
     "motto": "A kap ty zdoch!",
     "backgroundImage": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1600&q=80"
