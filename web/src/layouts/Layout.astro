@@ -71,30 +71,5 @@ const pageDescription = description ?? site.meta.description;
         });
       });
     </script>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script is:inline>
-      (function () {
-        var hash = window.location.hash || '';
-        if (
-          hash.indexOf('recovery_token') !== -1 ||
-          hash.indexOf('invite_token') !== -1 ||
-          hash.indexOf('confirmation_token') !== -1
-        ) {
-          window.location.replace('/auth/' + hash);
-          return;
-        }
-        function setupIdentity() {
-          if (!window.netlifyIdentity) return;
-          window.netlifyIdentity.on('init', function (user) {
-            if (!user) {
-              window.netlifyIdentity.on('login', function () {
-                document.location.href = '/admin/';
-              });
-            }
-          });
-        }
-        setupIdentity();
-      })();
-    </script>
   </body>
 </html>

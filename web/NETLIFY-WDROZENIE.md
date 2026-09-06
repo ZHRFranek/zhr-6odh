@@ -55,22 +55,28 @@ Adres tymczasowy: `https://cos-losowego.netlify.app`
 
 ---
 
-## 3. Netlify Identity (logowanie do panelu)
+## 3. Logowanie do panelu (GitHub OAuth)
 
-1. W Netlify: **Site configuration** → **Identity**
-2. **Enable Identity**
-3. **Registration preferences** → **Invite only** (tylko zaproszeni redaktorzy)
-4. **Identity** → **Services** → **Git Gateway** → **Enable Git Gateway**
+Zamiast Netlify Identity używamy **GitHub OAuth** — działa na telefonie i w każdej przeglądarce.
 
-Git Gateway łączy panel `/admin/` z repozytorium GitHub — po **Publish** w CMS zmiany trafiają do GitHuba, a Netlify przebudowuje stronę.
+**Pełna instrukcja:** [CMS-LOGOWANIE.md](./CMS-LOGOWANIE.md)
+
+Skrót:
+
+1. GitHub → **Settings** → **Developer settings** → **OAuth Apps** → **New OAuth App**
+2. Callback URL: `https://TWOJA-STRONA.netlify.app/.netlify/functions/oauth`
+3. Netlify → **Environment variables**: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`
+4. **Trigger deploy**
+
+Po **Publish** w CMS zmiany trafiają do GitHuba, a Netlify przebudowuje stronę.
 
 ---
 
-## 4. Zaproszenie redaktora
+## 4. Dostęp redaktora
 
-1. **Identity** → **Invite users**
-2. Wpisz e-mail redaktora (np. drużynowego)
-3. Po kliknięciu linku z maila użytkownik ustawia hasło i trafia na stronę; po zalogowaniu przekierowanie do `/admin/` działa automatycznie.
+Konto GitHub musi mieć **push** do repozytorium `ZHRFranek/zhr-6odh` (właściciel lub **Collaborator** w Settings repozytorium).
+
+Logowanie: `/admin/` → **Login with GitHub**.
 
 ---
 
@@ -83,7 +89,7 @@ https://TWOJA-STRONA.netlify.app/admin/
 ```
 
 - **Lokalnie** (`npm run dev` + `npm run cms`): logowanie wyłączone — `local_backend` w `config.yml`
-- **Na Netlify**: logowanie przez Netlify Identity + Git Gateway
+- **Na Netlify**: **Login with GitHub** (OAuth przez `netlify/functions/oauth.js`)
 
 ---
 
@@ -96,7 +102,7 @@ https://TWOJA-STRONA.netlify.app/admin/
 ## 7. Weryfikacja po wdrożeniu
 
 - [ ] Strona główna się ładuje
-- [ ] `/admin/` pokazuje ekran logowania Netlify Identity
+- [ ] `/admin/` pokazuje **Login with GitHub**
 - [ ] Po zalogowaniu widać sekcje **Galeria** i **Treści strony**
 - [ ] Testowa edycja w CMS → **Publish** → po ~1–2 min nowa treść na stronie
 - [ ] W GitHub widać commit z panelu
@@ -108,8 +114,8 @@ https://TWOJA-STRONA.netlify.app/admin/
 | Problem | Co sprawdzić |
 |---------|----------------|
 | Build failed | Logi w Netlify → Deploys; lokalnie: `cd web && npm run build` |
-| Panel nie loguje | Identity włączone, Git Gateway włączone, użytkownik zaproszony |
-| Publish nie zapisuje | Git Gateway + repo podpięte pod tę samą stronę Netlify |
+| Panel nie loguje | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` w Netlify; callback URL w GitHub OAuth App |
+| Publish nie zapisuje | Konto GitHub ma push do repo; poprawne ścieżki `web/` w `config.yml` |
 | 404 na `/admin/` | `netlify.toml` — redirecty admin (już skonfigurowane) |
 | Stara treść po Publish | Poczekaj na rebuild; sprawdź Deploys w Netlify |
 
@@ -118,7 +124,8 @@ https://TWOJA-STRONA.netlify.app/admin/
 ## Pliki konfiguracyjne
 
 - `web/netlify.toml` — build, Node 22, redirecty `/admin`
+- `web/netlify/functions/oauth.js` — GitHub OAuth dla panelu
 - `web/public/admin/config.yml` — kolekcje CMS (galeria, `site.json`)
-- `web/public/admin/index.html` — Decap CMS + widget Identity
+- `web/public/admin/index.html` — Decap CMS
 
 Szczegóły panelu: [PANEL-REDAKCYJNY.md](./PANEL-REDAKCYJNY.md)

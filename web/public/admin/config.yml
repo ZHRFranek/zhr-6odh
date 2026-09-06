@@ -1,10 +1,13 @@
-# Po wdrożeniu na Netlify: Git Gateway sam łączy się z repo podpiętym pod stronę Netlify.
-# local_backend działa tylko na localhost (npm run cms); na produkcji używany jest git-gateway.
+# Lokalnie: decap-server (npm run cms). Na produkcji: GitHub OAuth (Netlify Function).
 local_backend: true
 
 backend:
-  name: git-gateway
+  name: github
+  repo: ZHRFranek/zhr-6odh
   branch: main
+  base_url: https://zhr-6odh.netlify.app
+  auth_endpoint: /oauth/callback
+site_url: https://zhr-6odh.netlify.app
 media_folder: web/public/uploads
 public_folder: /uploads
 

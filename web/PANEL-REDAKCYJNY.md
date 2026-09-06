@@ -37,6 +37,12 @@ Panel: http://localhost:4321/admin/index.html (lub `/admin/` po restarcie serwer
 
 Po **Publish** w panelu (na Netlify) zmiany trafiają do GitHuba i strona przebudowuje się automatycznie.
 
+## Logowanie (produkcja)
+
+**Instrukcja:** [CMS-LOGOWANIE.md](./CMS-LOGOWANIE.md)
+
+Panel: `https://zhr-6odh.netlify.app/admin/` → **Login with GitHub** (działa na telefonie i w każdej przeglądarce).
+
 ## Wdrożenie na Netlify
 
 **Pełna instrukcja:** [NETLIFY-WDROZENIE.md](./NETLIFY-WDROZENIE.md)
@@ -45,9 +51,8 @@ Skrót:
 
 1. Repozytorium GitHub (cały folder `ZHR/`, base directory w Netlify: `web`)
 2. Netlify: Import from Git → base `web`, build `npm run build`, publish `dist`
-3. Włącz **Identity** (Invite only) + **Git Gateway**
-4. Zaproś redaktora mailem
-5. Panel: `https://twoja-strona.netlify.app/admin/`
+3. GitHub OAuth App + zmienne `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` w Netlify — patrz [CMS-LOGOWANIE.md](./CMS-LOGOWANIE.md)
+4. Panel: `https://twoja-strona.netlify.app/admin/` → Login with GitHub
 
 Po deployu **Publish** w panelu = commit do GitHub + auto-deploy strony.
 ## Struktura
