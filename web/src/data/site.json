@@ -2,7 +2,7 @@
   "kontakt": {
     "tag": "Kontakt",
     "title": "Skontaktuj się z nami",
-    "lead": "Mail i telefon — szybka droga do drużynowego.",
+    "lead": "",
     "email": "druzynowy@example.pl",
     "phone": "+48 123 456 789",
     "facebook": "#",
@@ -104,7 +104,7 @@
   "galeria": {
     "tag": "Galeria",
     "title": "Życie drużyny",
-    "introLine1": "Po wejściu w galerię widać wszystkie zdjęcia. Wybierz zastęp — przycisk pozostaje podświetlony.",
+    "introLine1": "Po wejściu w galerię widać wszystkie zdjęcia.\nWybierz zastęp — przycisk pozostaje podświetlony.",
     "introLine2": "Opcjonalnie zawęź wyniki tagiem typu aktywności."
   },
   "dolacz": {

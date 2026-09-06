@@ -17,6 +17,9 @@ interface Props {
 
 const { tag, title, introLine1, introLine2, zastepy, items } = Astro.props;
 
+const galleryIntroLines = [introLine1, introLine2]
+  .flatMap((line) => line.split('\n').map((part) => part.trim()).filter(Boolean));
+
 function thumbSrc(src: string) {
   if (src.includes('unsplash.com')) {
     return src.replace(/w=\d+/g, 'w=400').replace(/q=\d+/g, 'q=70');
@@ -29,8 +32,11 @@ function thumbSrc(src: string) {
   <div class="container">
     <h2 class="section-heading">{tag}</h2>
     <div class="gallery-intro">
-      <p class="section__lead">{introLine1}</p>
-      <p class="section__lead">{introLine2}</p>
+      {galleryIntroLines.map((line, index) => (
+        <p class:list={['gallery-intro__line', index === galleryIntroLines.length - 1 && 'gallery-intro__line--note']}>
+          {line}
+        </p>
+      ))}
     </div>
 
     <div class="gallery-filters">

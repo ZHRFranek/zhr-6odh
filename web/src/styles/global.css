@@ -395,17 +395,13 @@ section { scroll-margin-top: var(--nav-h); }
 
 #kontakt .kontakt-intro {
   margin-bottom: 2.5rem;
-  line-height: 1.45;
-  white-space: nowrap;
+  text-align: center;
 }
-#kontakt .kontakt-intro .section-heading,
-#kontakt .kontakt-intro .section__lead {
-  display: inline;
-  margin: 0;
+#kontakt .kontakt-intro .section-heading {
+  display: block;
+  margin: 0 auto;
   max-width: none;
-}
-#kontakt .kontakt-intro .section-heading::after {
-  content: " ";
+  white-space: normal;
 }
 
 #zastepy .section__lead {
@@ -586,8 +582,22 @@ section { scroll-margin-top: var(--nav-h); }
 #galeria .gallery-intro {
   margin-left: auto;
   margin-right: auto;
-  max-width: min(72rem, 100%);
-  margin-bottom: 2.5rem;
+  max-width: 34rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.gallery-intro__line {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.gallery-intro__line:last-child {
+  margin-bottom: 0;
+}
+.gallery-intro__line--note {
+  font-size: 0.92rem;
+  opacity: 0.85;
 }
 #galeria .gallery-intro .section__lead {
   margin-bottom: 0.35rem;
