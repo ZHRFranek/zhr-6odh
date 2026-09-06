@@ -6,7 +6,7 @@ backend:
   repo: ZHRFranek/zhr-6odh
   branch: main
   base_url: https://zhr-6odh.netlify.app
-  auth_endpoint: /oauth/callback
+  auth_endpoint: oauth/auth
 site_url: https://zhr-6odh.netlify.app
 media_folder: web/public/uploads
 public_folder: /uploads

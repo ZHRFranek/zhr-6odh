@@ -16,6 +16,8 @@ Działa w Chrome, Edge, Firefox, Safari i na telefonie.
 | Homepage URL | `https://zhr-6odh.netlify.app` |
 | Authorization callback URL | `https://zhr-6odh.netlify.app/oauth/callback` |
 
+Panel otwiera `/oauth/auth`, GitHub wraca na `/oauth/callback` (oba już skonfigurowane).
+
 3. **Register application**
 4. **Generate a new client secret** — skopiuj **Client ID** i **Client Secret**
 

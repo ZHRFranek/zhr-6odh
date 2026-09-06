@@ -1,4 +1,4 @@
-const html = (script, body = '') => ({
+const html = (script, body = '<p>Logowanie…</p>') => ({
   statusCode: 200,
   headers: {
     'Content-Type': 'text/html; charset=utf-8',
@@ -13,8 +13,18 @@ const originFromEvent = (event) => {
   return `${proto}://${host}`;
 };
 
-const sendToOpener = (message) =>
-  `(function(){var m=${message};if(window.opener&&!window.opener.closed){window.opener.postMessage(m,"*");window.close();return;}document.body.insertAdjacentHTML("beforeend","<p style=\\"font-family:system-ui;padding:1rem\\">Logowanie OK. <a href=/admin/>Wróć do panelu</a> i odśwież stronę.</p>");})();`;
+const callbackScript = (status, token) => `
+const receiveMessage = () => {
+  window.opener.postMessage(
+    'authorization:github:${status}:' + ${JSON.stringify(JSON.stringify({ token }))},
+    '*'
+  );
+  window.removeEventListener('message', receiveMessage, false);
+  window.close();
+};
+window.addEventListener('message', receiveMessage, false);
+window.opener.postMessage('authorizing:github', '*');
+`;
 
 export const handler = async (event) => {
   const clientId = process.env.GITHUB_CLIENT_ID;
@@ -24,16 +34,19 @@ export const handler = async (event) => {
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-      body: 'Brak GITHUB_CLIENT_ID lub GITHUB_CLIENT_SECRET w Netlify (Site configuration → Environment variables).',
+      body: 'Brak GITHUB_CLIENT_ID lub GITHUB_CLIENT_SECRET w Netlify.',
     };
   }
 
   const origin = originFromEvent(event);
-  const redirectUri = `${origin}/oauth/callback`;
+  const path = event.path || '';
   const params = event.queryStringParameters || {};
   const code = params.code;
+  const isCallback = path.includes('callback') || Boolean(code);
 
-  if (code) {
+  const callbackUri = `${origin}/oauth/callback`;
+
+  if (isCallback && code) {
     const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
@@ -45,31 +58,38 @@ export const handler = async (event) => {
         client_id: clientId,
         client_secret: clientSecret,
         code,
-        redirect_uri: redirectUri,
+        redirect_uri: callbackUri,
       }),
     });
 
     const data = await tokenRes.json();
 
     if (data.error || !data.access_token) {
-      const message = JSON.stringify(
-        `authorization:github:error:${data.error_description || data.error || 'token_exchange_failed'}`,
-      );
-      return html(sendToOpener(message), '<p>Błąd logowania. Okno możesz zamknąć.</p>');
+      const err = JSON.stringify({
+        message: data.error_description || data.error || 'token_exchange_failed',
+      });
+      return html(`
+window.opener.postMessage('authorization:github:error:' + ${JSON.stringify(err)}, '*');
+window.close();
+`, '<p>Błąd logowania. Zamknij okno i spróbuj ponownie.</p>');
     }
 
-    const payload = JSON.stringify({ token: data.access_token, provider: 'github' });
-    const success = JSON.stringify(`authorization:github:success:${payload}`);
-    return html(sendToOpener(success));
+    return html(callbackScript('success', data.access_token), '<p>Logowanie OK…</p>');
+  }
+
+  if (params.provider && params.provider !== 'github') {
+    return { statusCode: 400, body: 'Invalid provider' };
   }
 
   const authUrl = new URL('https://github.com/login/oauth/authorize');
   authUrl.searchParams.set('client_id', clientId);
   authUrl.searchParams.set('scope', 'repo,user');
-  authUrl.searchParams.set('redirect_uri', redirectUri);
-  for (const [key, value] of Object.entries(params)) {
-    if (value) authUrl.searchParams.set(key, value);
-  }
+  authUrl.searchParams.set('redirect_uri', callbackUri);
+  if (params.state) authUrl.searchParams.set('state', params.state);
 
-  return html(`window.location.replace(${JSON.stringify(authUrl.toString())});`);
+  return {
+    statusCode: 302,
+    headers: { Location: authUrl.toString(), 'Cache-Control': 'no-store' },
+    body: '',
+  };
 };

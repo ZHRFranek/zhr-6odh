@@ -18,6 +18,11 @@
   status = 200
 
 [[redirects]]
+  from = "/oauth/auth"
+  to = "/.netlify/functions/oauth"
+  status = 200
+
+[[redirects]]
   from = "/oauth/callback"
   to = "/.netlify/functions/oauth"
   status = 200
