@@ -1,10 +1,10 @@
-const html = (script) => ({
+const html = (script, body = '') => ({
   statusCode: 200,
   headers: {
     'Content-Type': 'text/html; charset=utf-8',
     'Cache-Control': 'no-store',
   },
-  body: `<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8" /></head><body><script>${script}</script></body></html>`,
+  body: `<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8" /><title>Logowanie CMS</title></head><body>${body}<script>${script}</script></body></html>`,
 });
 
 const originFromEvent = (event) => {
@@ -12,6 +12,9 @@ const originFromEvent = (event) => {
   const host = event.headers.host;
   return `${proto}://${host}`;
 };
+
+const sendToOpener = (message) =>
+  `(function(){var m=${message};if(window.opener&&!window.opener.closed){window.opener.postMessage(m,"*");window.close();return;}document.body.insertAdjacentHTML("beforeend","<p style=\\"font-family:system-ui;padding:1rem\\">Logowanie OK. <a href=/admin/>Wróć do panelu</a> i odśwież stronę.</p>");})();`;
 
 export const handler = async (event) => {
   const clientId = process.env.GITHUB_CLIENT_ID;
@@ -48,21 +51,25 @@ export const handler = async (event) => {
 
     const data = await tokenRes.json();
 
-    if (data.error) {
+    if (data.error || !data.access_token) {
       const message = JSON.stringify(
-        `authorization:github:error:${data.error_description || data.error}`,
+        `authorization:github:error:${data.error_description || data.error || 'token_exchange_failed'}`,
       );
-      return html(`(function(){var m=${message};if(window.opener){window.opener.postMessage(m,"*");}window.close();})();`);
+      return html(sendToOpener(message), '<p>Błąd logowania. Okno możesz zamknąć.</p>');
     }
 
     const payload = JSON.stringify({ token: data.access_token, provider: 'github' });
     const success = JSON.stringify(`authorization:github:success:${payload}`);
-    return html(
-      `(function(){var m=${success};if(window.opener){window.opener.postMessage(m,window.location.origin);}window.close();})();`,
-    );
+    return html(sendToOpener(success));
   }
 
-  const scope = encodeURIComponent('repo,user');
-  const authUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(clientId)}&scope=${scope}&redirect_uri=${encodeURIComponent(redirectUri)}`;
-  return html(`window.location.replace(${JSON.stringify(authUrl)});`);
+  const authUrl = new URL('https://github.com/login/oauth/authorize');
+  authUrl.searchParams.set('client_id', clientId);
+  authUrl.searchParams.set('scope', 'repo,user');
+  authUrl.searchParams.set('redirect_uri', redirectUri);
+  for (const [key, value] of Object.entries(params)) {
+    if (value) authUrl.searchParams.set(key, value);
+  }
+
+  return html(`window.location.replace(${JSON.stringify(authUrl.toString())});`);
 };
