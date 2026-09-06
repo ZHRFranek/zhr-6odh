@@ -410,7 +410,11 @@ section { scroll-margin-top: var(--nav-h); }
 
 #zastepy .section__lead {
   max-width: none;
-  white-space: nowrap;
+  white-space: normal;
+}
+
+.zastepy-lead__line {
+  display: block;
 }
 
 #kalendarz .section__lead {

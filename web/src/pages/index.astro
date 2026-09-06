@@ -6,6 +6,14 @@ import { loadSite, loadGallery } from '../lib/content';
 const site = loadSite();
 const galleryItems = loadGallery();
 const heroBg = `url("${site.hero.backgroundImage}")`;
+
+const zastepyLeadLines = site.zastepy.lead.includes('\n')
+  ? site.zastepy.lead.split('\n').map((line) => line.trim()).filter(Boolean)
+  : [
+      'Poznaj zastępy drużyny —',
+      'każdy ma swój charakter, znak i skład.',
+      'Dane wrażliwe nie są publikowane.',
+    ];
 ---
 
 <Layout>
@@ -76,7 +84,11 @@ const heroBg = `url("${site.hero.backgroundImage}")`;
   <section class="section section--beige" id="zastepy">
     <div class="container">
       <h2 class="section-heading">{site.zastepy.title}</h2>
-      <p class="section__lead">{site.zastepy.lead}</p>
+      <p class="section__lead zastepy-lead">
+        {zastepyLeadLines.map((line) => (
+          <span class="zastepy-lead__line">{line}</span>
+        ))}
+      </p>
 
       <div class="zastepy-grid">
         {site.zastepy.items.map((z) => (
